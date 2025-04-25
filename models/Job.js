@@ -18,6 +18,10 @@ const JobSchema = mongoose.Schema({
         },
         required: [true, 'Status is required'],
     },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
 });
 
 const Job = mongoose.model('Job', JobSchema);
