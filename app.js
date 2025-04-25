@@ -8,6 +8,7 @@ const connectDB = require('./db/connect');
 
 //including the routers
 const authRouter = require('./routes/auth');
+const jobsRouter = require('./routes/jobs');
 
 //including error handlers
 const notFoundMiddleware = require('./middleware/not-found');
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
     res.send('jobs api');
 });
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/jobs', jobsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
