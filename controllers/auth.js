@@ -9,8 +9,6 @@ exports.register = catchAsync(async (req, res, next) => {
 
     const token = await newUser.createJWT();
 
-    req.user = newUser;
-
     res.status(StatusCodes.CREATED).json({
         status: 'success',
         user: { name: newUser.name },
@@ -30,7 +28,6 @@ exports.login = catchAsync(async (req, res, next) => {
         return next(new UnauthenticatedError('Invalid email or password'));
     }
 
-    req.user = user;
     //generate JWT token and send it back
     const token = await user.createJWT();
     return res.status(StatusCodes.OK).json({ status: 'success', user: { name: user.name }, token });
