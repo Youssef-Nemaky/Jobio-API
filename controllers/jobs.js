@@ -16,7 +16,7 @@ exports.getJob = catchAsync(async (req, res, next) => {
     }
 
     //check the if the user is authorized to get this resoruce (owner or not)
-    if (job.user !== req.user.userId) {
+    if (job.user != req.user.userId) {
         return next(new ForbiddenError('You do not have access to perform this action'));
     }
 
@@ -26,7 +26,7 @@ exports.getJob = catchAsync(async (req, res, next) => {
 exports.createJob = catchAsync(async (req, res, next) => {
     const newJob = await Job.create({ ...req.body, user: req.user.userId });
 
-    res.status(StatusCodes.CREATED).json({ status: 'success', newJob });
+    res.status(StatusCodes.CREATED).json({ status: 'success', job: newJob });
 });
 
 exports.updateJob = catchAsync(async (req, res, next) => {

@@ -12,6 +12,7 @@ const JobSchema = mongoose.Schema({
 
     status: {
         type: String,
+        default: 'pending',
         enum: {
             values: ['pending', 'interview', 'declined'],
             message: 'Invalid value for status. You can choose from pending, interview and declined',
