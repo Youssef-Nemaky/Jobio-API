@@ -1,24 +1,15 @@
 const { StatusCodes } = require('http-status-codes');
 const catchAsync = require('../utils/catchAsync');
 const Job = require('../models/Job');
-const { NotFoundError, ForbiddenError } = require('../errors');
 
 exports.getAllJobs = catchAsync(async (req, res, next) => {
     const jobs = await Job.find({ user: req.user.userId });
-    res.status(StatusCodes.OK).json({ status: 'success', jobs });
+    res.status(StatusCodes.OK).json({ status: 'success', length: jobs.length, jobs });
 });
 
 exports.getJob = catchAsync(async (req, res, next) => {
-    const job = await Job.findById(req.params.id);
-
-    if (!job) {
-        return next(new NotFoundError(`No job with ID: ${req.params.id} found`));
-    }
-
-    //check the if the user is authorized to get this resoruce (owner or not)
-    if (job.user != req.user.userId) {
-        return next(new ForbiddenError('You do not have access to perform this action'));
-    }
+    //Get the job from checkOwnership middleware
+    const job = req.resource;
 
     res.status(StatusCodes.OK).json({ status: 'success', job });
 });
@@ -30,17 +21,8 @@ exports.createJob = catchAsync(async (req, res, next) => {
 });
 
 exports.updateJob = catchAsync(async (req, res, next) => {
-    const job = await Job.findById(req.params.id);
-
-    //check if the document is present
-    if (!job) {
-        return next(new NotFoundError(`No job with ID: ${req.params.id} found`));
-    }
-
-    //check the if the user is authorized to get this resoruce (owner or not)
-    if (job.user != req.user.userId) {
-        return next(new ForbiddenError('You do not have access to perform this action'));
-    }
+    //Get the job from checkOwnership middleware
+    const job = req.resource;
 
     //update the document
     Object.assign(job, req.body);
@@ -51,17 +33,8 @@ exports.updateJob = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteJob = catchAsync(async (req, res, next) => {
-    const job = await Job.findById(req.params.id);
-
-    //check if the document is present
-    if (!job) {
-        return next(new NotFoundError(`No job with ID: ${req.params.id} found`));
-    }
-
-    //check the if the user is authorized to get this resoruce (owner or not)
-    if (job.user != req.user.userId) {
-        return next(new ForbiddenError('You do not have access to perform this action'));
-    }
+    //Get the job from checkOwnership middleware
+    const job = req.resource;
 
     //delete the document
     await job.deleteOne();
