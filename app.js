@@ -1,8 +1,14 @@
 require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
-const cors = require('cors');
+
 const app = express();
+
+//security packages
+const cors = require('cors');
+const helmet = require('helmet');
+const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
 
 const connectDB = require('./db/connect');
 
@@ -16,12 +22,35 @@ const { authenticate } = require('./middleware/authentication');
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
+app.set('trust proxy', 1);
+
+const appLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 300, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+    message: 'Too many requests from this IP. Please, try again in 15 minutes',
+    validate: {
+        trustProxy: 'acknowledged', // 🔥 Must be set if trust proxy is true
+    },
+});
+
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    limit: 20, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+    message: 'Too many requests from this IP. Please, try again in 15 minutes',
+    validate: {
+        trustProxy: 'acknowledged', // 🔥 Must be set if trust proxy is true
+    },
+});
+
 // This allows the front-end to send a request to the back-end on the same localhost with different ports
 app.use(
     cors({
         origin: 'https://react-jobs-app-psi.vercel.app', // this must match exactly
     })
 );
+
+app.use(helmet());
+app.use(xss());
 
 app.use(express.json()); //To allow req.body in the request
 // extra packages
@@ -30,8 +59,9 @@ app.use(express.json()); //To allow req.body in the request
 app.get('/', (req, res) => {
     res.send('jobs api');
 });
-app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/jobs', authenticate, jobsRouter);
+
+app.use('/api/v1/auth', loginLimiter, authRouter);
+app.use('/api/v1/jobs', appLimiter, authenticate, jobsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
