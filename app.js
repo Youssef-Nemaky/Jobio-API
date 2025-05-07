@@ -19,7 +19,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 // This allows the front-end to send a request to the back-end on the same localhost with different ports
 app.use(
     cors({
-        origin: 'http://localhost:3000', // this must match exactly
+        origin: 'https://react-jobs-app-psi.vercel.app', // this must match exactly
     })
 );
 
