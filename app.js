@@ -65,7 +65,7 @@ app.use(express.json()); //To allow req.body in the request
 // extra packages
 
 // routes
-app.get('/', (req, res) => {
+app.get('/api/v1', (req, res) => {
     res.send(`jobs api\n<h1><a href=${backendDomain}/api-docs>Documentation</h1>`);
 });
 
