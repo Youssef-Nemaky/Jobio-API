@@ -2,6 +2,8 @@ require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
 
+const frontEndDomain = 'https://jobio-seven.vercel.app';
+
 //swagger
 const { swaggerUi, swaggerDocument } = require('./swagger');
 
@@ -51,7 +53,7 @@ const loginLimiter = rateLimit({
 // This allows the front-end to send a request to the back-end on the same localhost with different ports
 app.use(
     cors({
-        origin: 'https://react-jobs-app-psi.vercel.app', // this must match exactly
+        origin: frontEndDomain, // this must match exactly
     })
 );
 
@@ -81,7 +83,7 @@ const port = process.env.PORT || 5000;
 const start = async () => {
     try {
         app.listen(port, () => console.log(`Server is listening on port ${port}...`));
-        console.log('Swagger UI available at https://jobio-api.vercel.app/api-docs');
+        console.log(`Swagger UI available at ${frontEndDomain}/api-docs`);
     } catch (error) {
         console.log(error);
     }
