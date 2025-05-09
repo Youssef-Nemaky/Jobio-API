@@ -6,7 +6,7 @@ Jobio is a RESTful API for user authentication and job management built with **N
 
 - **Demo**: [https://jobio-seven.vercel.app](https://jobio-seven.vercel.app)
 - **API Base URL**: [https://jobio-production.up.railway.app/api/v1](https://jobio-production.up.railway.app/api/v1)
-- **Swagger Docs**: [https://jobio-production.up.railway.app/api-docs](https://jobio-production.up.railway.app/api-doc)
+- **Swagger Docs**: [https://jobio-production.up.railway.app/api-docs](https://jobio-production.up.railway.app/api-docs)
 - **Front-end code**: [https://github.com/Youssef-Nemaky/Jobio](https://github.com/Youssef-Nemaky/Jobio)
 
 
