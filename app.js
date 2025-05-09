@@ -4,7 +4,6 @@ const express = require('express');
 
 const frontEndDomain = 'https://jobio-seven.vercel.app';
 const backendDomain = 'https://jobio-production.up.railway.app/';
-const backendDomain = 'https://jobio-production.up.railway.app/';
 
 //swagger
 const { swaggerUi, swaggerDocument } = require('./swagger');
