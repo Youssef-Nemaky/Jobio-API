@@ -2,7 +2,13 @@ require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
 
+//swagger
+const { swaggerUi, swaggerDocument } = require('./swagger');
+
 const app = express();
+
+// Swagger route
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //security packages
 const cors = require('cors');
@@ -75,6 +81,7 @@ const port = process.env.PORT || 5000;
 const start = async () => {
     try {
         app.listen(port, () => console.log(`Server is listening on port ${port}...`));
+        console.log('Swagger UI available at https://jobio-api.vercel.app/api-docs');
     } catch (error) {
         console.log(error);
     }
