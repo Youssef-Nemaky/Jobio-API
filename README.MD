@@ -1,69 +1,103 @@
-#### Setup
+# Jobio API
+
+Jobio is a RESTful API for user authentication and job management built with **Node.js**, **Express**, **MongoDB**, and **JWT**. It includes endpoints for registering and logging in users and managing job entries (create, read, update, delete). API documentation is provided via **Swagger UI**.
+
+## 🔗 Live Demo
+
+- **Demo**: [https://jobio-seven.vercel.app](https://jobio-seven.vercel.app)
+- **API Base URL**: [https://jobio-api.up.railway.app/api/v1](https://jobio-api.up.railway.app/api/v1)
+- **Swagger Docs**: [https://jobio-api.up.railway.app/api-docs](https://jobio-api.up.railway.app/api-docs)
+- **Front-end code**: [https://github.com/Youssef-Nemaky/Jobio](https://github.com/Youssef-Nemaky/Jobio)
+
+
+## ✨ Features
+
+* User registration and login
+* JWT-based authentication
+* Full CRUD for jobs (create, read, update, delete)
+* Swagger UI API documentation
+* Environment-based configuration
+* Error handling and rate limiting
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+* Node.js v14 or later
+* MongoDB instance (local or cloud e.g., MongoDB Atlas)
+
+### Installation
+
+1. Clone the repo
 
 ```bash
-npm install && npm start
+git clone https://github.com/your-username/jobio-api.git
+cd jobio-api
 ```
 
-#### Database Connection
+2. Install dependencies
 
-1. Import connect.js
-2. Invoke in start()
-3. Setup .env in the root
-4. Add MONGO_URI with correct value
-
-#### Routers
-
-- auth.js
-- jobs.js
-
-#### User Model
-
-Email Validation Regex
-
-```regex
-/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+```bash
+npm install
 ```
 
-#### Register User
+3. Create a `.env` file in the root with the following:
 
-- Validate - name, email, password - with Mongoose
-- Hash Password (with bcryptjs)
-- Save User
-- Generate Token
-- Send Response with Token
-
-#### Login User
-
-- Validate - email, password - in controller
-- If email or password is missing, throw BadRequestError
-- Find User
-- Compare Passwords
-- If no user or password does not match, throw UnauthenticatedError
-- If correct, generate Token
-- Send Response with Token
-
-#### Mongoose Errors
-
-- Validation Errors
-- Duplicate (Email)
-- Cast Error
-
-#### Security
-
-- helmet
-- cors
-- xss-clean
-- express-rate-limit
-
-Swagger UI
-
-```yaml
-/jobs/{id}:
-  parameters:
-    - in: path
-      name: id
-      schema:
-        type: string
-      required: true
-      description: the job id
+```env
+MONGO_URI=your_mongodb_connection_string
+SALT_ROUNDS=10
+JWT_SECRET=your_jwt_secret
+JWT_LIFETIME=1d
 ```
+
+### Environment Variables
+
+* `MONGO_URI`: Connection string for your MongoDB database.
+* `SALT_ROUNDS`: Number of salt rounds for hashing passwords with bcrypt.
+* `JWT_SECRET`: Secret key used to sign and verify JWTs.
+* `JWT_LIFETIME`: Expiration time for JWT tokens (e.g., `1d`, `7d`).
+
+4. Run the app
+
+```bash
+npm start
+```
+
+### Development
+
+```bash
+npm run dev
+```
+
+## 🛠️ Endpoints Overview
+
+### Auth Routes
+
+| Method | Route          | Description         |
+| ------ | -------------- | ------------------- |
+| POST   | /auth/register | Register new user   |
+| POST   | /auth/login    | Login user, get JWT |
+
+### Job Routes (Requires JWT)
+
+| Method | Route      | Description      |
+| ------ | ---------- | ---------------- |
+| GET    | /jobs      | Get all jobs     |
+| POST   | /jobs      | Create a new job |
+| GET    | /jobs/\:id | Get single job   |
+| PATCH  | /jobs/\:id | Update a job     |
+| DELETE | /jobs/\:id | Delete a job     |
+
+## 🥪 API Documentation
+
+Available at:
+📄 [https://jobio-api.up.railway.app/api-docs](https://jobio-api.up.railway.app/api-docs)
+
+* Uses Swagger UI (`swagger-ui-express`)
+* Swagger YAML or JSON located at `/swagger.yaml` or `/swagger.json`
+
+## 📦 Deployment
+
+This API was deployed using [Railway](https://railway.app), a simple and free cloud platform for deploying Node.js apps.
+
+Front-end is hosted on [vercel](https://jobio-seven.vercel.app/)
