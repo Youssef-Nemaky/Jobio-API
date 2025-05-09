@@ -3,6 +3,7 @@ require('express-async-errors');
 const express = require('express');
 
 const frontEndDomain = 'https://jobio-seven.vercel.app';
+const backendDomain = 'https://jobio-production.up.railway.app/';
 
 //swagger
 const { swaggerUi, swaggerDocument } = require('./swagger');
@@ -65,7 +66,7 @@ app.use(express.json()); //To allow req.body in the request
 
 // routes
 app.get('/', (req, res) => {
-    res.send('jobs api');
+    res.send(`jobs api\n<h1><a href=${backendDomain}/api-docs>Documentation</h1>`);
 });
 
 app.use('/api/v1/auth', loginLimiter, authRouter);
@@ -83,7 +84,7 @@ const port = process.env.PORT || 5000;
 const start = async () => {
     try {
         app.listen(port, () => console.log(`Server is listening on port ${port}...`));
-        console.log(`Swagger UI available at ${frontEndDomain}/api-docs`);
+        console.log(`Swagger UI available at ${backendDomain}/api-docs`);
     } catch (error) {
         console.log(error);
     }
