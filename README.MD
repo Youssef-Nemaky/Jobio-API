@@ -5,7 +5,7 @@ Jobio is a RESTful API for user authentication and job management built with **N
 ## 🔗 Live Demo
 
 - **Demo**: [https://jobio-seven.vercel.app](https://jobio-seven.vercel.app)
-- **API Base URL**: [https://jobio-api.up.railway.app/api/v1](https://jobio-api.up.railway.app/api/v1)
+- **API Base URL**: [https://jobio-production.up.railway.app/api/v1](https://jobio-production.up.railway.app/api/v1)
 - **Swagger Docs**: [https://jobio-api.up.railway.app/api-docs](https://jobio-api.up.railway.app/api-docs)
 - **Front-end code**: [https://github.com/Youssef-Nemaky/Jobio](https://github.com/Youssef-Nemaky/Jobio)
 
@@ -91,7 +91,7 @@ npm run dev
 ## 🥪 API Documentation
 
 Available at:
-📄 [https://jobio-api.up.railway.app/api-docs](https://jobio-api.up.railway.app/api-docs)
+📄 [https://jobio-production.up.railway.app/api-docs](https://jobio-api.up.railway.app/api-docs)
 
 * Uses Swagger UI (`swagger-ui-express`)
 * Swagger YAML or JSON located at `/swagger.yaml` or `/swagger.json`
